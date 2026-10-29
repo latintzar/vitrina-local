@@ -353,7 +353,7 @@ export async function extractRecipeVideo(url: string): Promise<RecipeVideoDetail
  */
 export function thumbnailUrl(video: RecipeVideoSummary): string | null {
   if (!video?.id) return null;
-  return `/demo-cover.svg`;
+  return `${import.meta.env.BASE_URL}demo-cover.svg`;
 }
 
 /** Resolve the locally-pinned MP4 URL (absolute), or null if we don't

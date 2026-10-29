@@ -44,7 +44,7 @@ function recipeMeta(line: OrderLine): RecipeMeta | null {
   const title = typeof m.title === 'string' ? m.title : 'Recipe';
   const source_url = typeof m.source_url === 'string' ? m.source_url : undefined;
   const video_id = typeof m.video_id === 'string' ? m.video_id : undefined;
-  const cover_url = video_id ? `/api/recipe-videos/${video_id}/cover.jpg` : undefined;
+  const cover_url = video_id ? (video_id.startsWith('demo-') ? `${import.meta.env.BASE_URL}demo-cover.svg` : `/api/recipe-videos/${video_id}/cover.jpg`) : undefined;
   return { title, source_url, video_id, cover_url };
 }
 

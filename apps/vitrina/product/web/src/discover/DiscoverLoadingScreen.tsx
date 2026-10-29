@@ -29,14 +29,14 @@ import { useEffect, useState } from 'react';
 // Exported so smaller in-page loaders (e.g. infinite-scroll loader at
 // the bottom of Discover) can reuse the same set and feel cohesive.
 export const LOADING_DOODLES = [
-  '/waiting-assets/doodles/vitrina-tomato.png',
-  '/waiting-assets/doodles/vitrina-blender.png',
-  '/waiting-assets/doodles/vitrina-can.png',
-  '/waiting-assets/doodles/vitrina-peeler.png',
-  '/waiting-assets/doodles/vitrina-taco.png',
-  '/waiting-assets/doodles/vitrina-spaghetti.png',
-  '/waiting-assets/doodles/vitrina-knife.png',
-  '/waiting-assets/doodles/vitrina-steak.png',
+  `${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-tomato.png`,
+  `${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-blender.png`,
+  `${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-can.png`,
+  `${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-peeler.png`,
+  `${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-taco.png`,
+  `${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-spaghetti.png`,
+  `${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-knife.png`,
+  `${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-steak.png`,
 ];
 
 const DOODLES = LOADING_DOODLES;

@@ -67,7 +67,7 @@ function recipeMeta(line: CartLine): RecipeMeta | null {
   const title = typeof m.title === 'string' ? m.title : 'Recipe';
   const source_url = typeof m.source_url === 'string' ? m.source_url : undefined;
   const video_id = typeof m.video_id === 'string' ? m.video_id : undefined;
-  const cover_url = video_id ? `/api/recipe-videos/${video_id}/cover.jpg` : undefined;
+  const cover_url = video_id ? (video_id.startsWith('demo-') ? `${import.meta.env.BASE_URL}demo-cover.svg` : `/api/recipe-videos/${video_id}/cover.jpg`) : undefined;
   return { title, source_url, video_id, cover_url };
 }
 
@@ -872,7 +872,7 @@ function EmptyBasketSkeleton({ onDiscover }: { onDiscover?: () => void }) {
       ) : null}
       <img
         className="vitrina-cart-empty__doodle"
-        src="/waiting-assets/doodles/vitrina-can.png"
+        src={`${import.meta.env.BASE_URL}waiting-assets/doodles/vitrina-can.png`}
         alt=""
         loading="lazy"
       />

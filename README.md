@@ -1,8 +1,10 @@
 # Vitrina Local
 
-Vitrina helped people discover recipes and collect ingredients from independent local shops. This repository recovers the original shopper React app: Discover, saved recipes, the recipe detail, shop-grouped ingredients and a multi-shop basket.
+Vitrina Local is a recipe and shopping app for independent neighbourhood shops. People discover or save recipes, follow their videos and build baskets from ingredients available nearby. Shops make their stock visible to people planning a meal.
 
-The standalone demonstration uses fictional recipes, shops, products and prices. Its API adapter implements a small subset of the original contract in the browser; basket and likes stay in browser storage. It does not connect to a store or take payments. Original social video support remains in the source; this demonstration uses an authored illustration and contains no third-party video files.
+The recovered shopper interface brings together recipe discovery, saved recipes, video and ingredients, local stock grouped by shop, and a multi-shop basket. The companion Instagram integration turns shared Reels into recipes and basket-review links. Social Recipes is the separate extraction and video work that Vitrina Local builds on.
+
+The standalone preview runs the original Discover, recipe and basket interface using authored recipes, fictional shops and browser-local stock. Checkout is a provider integration for a connected deployment. The [architecture](docs/architecture.md) and [status](docs/status.md) describe the recovered scope.
 
 ## Run
 
@@ -13,16 +15,19 @@ pnpm install
 pnpm --filter @scope/vitrina-web dev
 ```
 
-Open the displayed local URL. `pnpm --filter @scope/vitrina-web build` checks TypeScript and builds the app.
+Open the displayed local URL. Build for a public path with:
 
-## Provenance and status
+```sh
+pnpm --filter @scope/vitrina-web build --base /apps/vitrina-local/
+```
 
-The shopper UI is derived from the Vitrina era-1 app in the Leo monorepo (`apps/vitrina/product/web`, paused May 2026). The browser-local demo adapter and fictional data are new. Original customer accounts, backend services, store records, deployment settings and repository history are excluded. The historical app included social recipe extraction and store matching, which require their own backend and are not represented by the local fixture.
+The build writes to `apps/vitrina/product/public/app`. Set the base to `/` for a root-hosted deployment. The demo stores the basket and saved recipes in the visitor's browser.
 
-The Microinvest WHP integration was a read-only PowerShell lab demo at one shop. The historical source tree contains a production-reader contract, not a production reader binary; it is not included here.
+## Companion projects
 
-Social Recipes is a separate extraction and CDN project; Vitrina Local consumed recipe results as part of its shopping flow.
+- [Social Recipes Kit](https://github.com/latintzar/social-recipes-kit) — reusable extraction and video modules.
+- [Instagram Recipe Cart](https://github.com/latintzar/instagram-recipe-cart) — shared-Reel intake and basket review integration.
 
 ## License
 
-First-party source and the authored demo illustration are available under the [MIT license](LICENSE). Dependencies retain their own licenses; they are installed separately and are not distributed in this repository. The demo includes no third-party recipe videos or bundled third-party fonts.
+First-party source, original Vitrina doodles and the authored demo illustration are available under the [MIT license](LICENSE). Dependencies retain their own licenses and are installed separately. The preview contains no bundled third-party recipe videos or fonts.
