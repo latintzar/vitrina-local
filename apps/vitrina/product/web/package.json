@@ -1,0 +1,40 @@
+{
+  "name": "@scope/vitrina-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ai-sdk/react": "^3.0.170",
+    "@posthog/react": "^1.9.0",
+    "@scope/brand": "workspace:*",
+    "@scope/ui": "workspace:*",
+    "@stripe/react-stripe-js": "^6.3.0",
+    "@stripe/stripe-js": "^9.3.1",
+    "@supabase/supabase-js": "^2.45.4",
+    "ai": "^6.0.168",
+    "lucide-react": "^0.577.0",
+    "mapbox-gl": "^3.14.0",
+    "posthog-js": "^1.365.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@scope/tsconfig": "workspace:*",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/mapbox-gl": "^3.5.0",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "tailwindcss": "^4.2.2",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.1",
+    "vitest": "^3.0.9"
+  }
+}

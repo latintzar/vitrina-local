@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@source "../../../../packages/ui/src/**/*.{tsx,ts}";
+@source "./**/*.{tsx,ts}";
+@import "@scope/ui/theme.css";
+@import "../public/brand-vars.css";
+
+@layer base {
+  html, body, #root {
+    min-height: 100dvh;
+  }
+  /*
+   * App-not-document gestures.
+   *
+   * Vitrina is a fixed-canvas app (Mapbox map, full-bleed video,
+   * keyboard-aware sticky CTAs). Pinch-to-zoom and double-tap-zoom
+   * break every one of those layouts and Peter explicitly asked for
+   * them off. The viewport meta in index.html disables pinch-zoom;
+   * `touch-action: manipulation` here disables iOS's double-tap-to-
+   * zoom delay even on browsers that ignore the meta. We also kill
+   * the long-press text-callout selection on chrome elements so
+   * dragging a card or holding a button doesn't pop up the OS
+   * "copy / lookup" sheet.
+   */
+  html {
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-cream, #F7F2E4);
+    color: var(--color-ink, #1D2936);
+    font-family: var(--font-sans, system-ui, sans-serif);
+    margin: 0;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  code {
+    background: var(--color-cream-dark);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+}

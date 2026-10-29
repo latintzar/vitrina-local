@@ -1,0 +1,14 @@
+node_modules/
+**/node_modules/
+**/*.tsbuildinfo
+apps/vitrina/product/public/
+.env*
+!.env.example
+apps/vitrina/product/web/src/waiting/
+apps/vitrina/product/web/src/merchants/*
+!apps/vitrina/product/web/src/merchants/merchantLang.tsx
+apps/vitrina/product/web/src/STATE.md
+packages/brand/**/*.md
+packages/ui/**/*.md
+packages/brand/src/brand/assets/
+packages/brand/tests/
