@@ -460,9 +460,9 @@ export function Cart({
           type="button"
           className="vitrina-bsk-checkout"
           onClick={onCheckout}
-          disabled={cart.cartIds.length === 0}
+          disabled
         >
-          Check out
+          Checkout unavailable in demo
         </button>
       </footer>
 

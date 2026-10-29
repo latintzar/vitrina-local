@@ -192,13 +192,13 @@ export default function App() {
       <div
         className={`vitrina-app ${chatStarted ? 'vitrina-chat--active' : ''} ${keyboardOpen ? 'vitrina-keyboard-open' : ''}`}
       >
-        <div style={{padding:"8px 14px",background:"#f3e4bb",textAlign:"center",fontSize:12}}>Demo recipes and fictional shops · Basket stays on this device</div>
+        <div style={{position:"fixed",top:64,left:0,right:0,zIndex:30,padding:"6px 14px",background:"#f3e4bb",textAlign:"center",fontSize:12}}>Demo recipes and fictional shops · Basket stays on this device</div>
         <header className="vitrina-app-chrome brand-glass--vellum">
           <button type="button" className="vitrina-wordmark" onClick={() => setActiveTab('discover')}>
             Vitrina
           </button>
           <div className="vitrina-top-actions">
-            <button type="button" aria-label="Open orders" onClick={() => setHistoryOpen(true)}>
+            <button type="button" aria-label="Open orders" disabled onClick={() => setHistoryOpen(true)}>
               <Receipt size={19} strokeWidth={1.8} />
             </button>
             <button
@@ -354,7 +354,7 @@ export default function App() {
           )}
         </section>
         <aside className="vitrina-side-nav" aria-label="Primary (desktop)">
-          <button type="button" className="vitrina-side-newchat" onClick={newChat}>
+          <button type="button" className="vitrina-side-newchat" disabled onClick={newChat}>
             + New chat
           </button>
           <SideNavItem id="chat" active={activeTab === 'chat'} onClick={() => setActiveTab('chat')} icon={<MessageCircle size={18} />} label="Chat" />
@@ -684,6 +684,7 @@ export default function App() {
 }
 
 function SideNavItem({
+  id,
   active,
   icon,
   label,
@@ -699,6 +700,7 @@ function SideNavItem({
     <button
       type="button"
       className={`vitrina-side-item ${active ? 'is-active' : ''}`}
+      disabled={id !== 'discover'}
       onClick={onClick}
     >
       <span className="vitrina-side-item__icon">{icon}</span>
@@ -708,6 +710,7 @@ function SideNavItem({
 }
 
 function TabButton({
+  id,
   active,
   icon,
   label,
@@ -720,7 +723,7 @@ function TabButton({
   onClick: () => void;
 }) {
   return (
-    <button type="button" className={`vitrina-nav-item ${active ? 'is-active' : ''}`} onClick={onClick}>
+    <button type="button" className={`vitrina-nav-item ${active ? 'is-active' : ''}`} disabled={id !== 'discover'} onClick={onClick}>
       {icon}
       <span>{label}</span>
     </button>
