@@ -1,0 +1,2 @@
+/* Keep Vitrina's fixed header, bottom navigation and sheets within the app viewport. */
+#root { position: fixed; inset: var(--atelier-nav-height, 56px) 0 0; min-height: 0; overflow: auto; transform: translateZ(0); }

@@ -31,3 +31,5 @@ The build writes to `apps/vitrina/product/public/app`. Set the base to `/` for a
 ## License
 
 First-party source, original Vitrina doodles and the authored demo illustration are available under the [MIT license](LICENSE). Dependencies retain their own licenses and are installed separately. The preview contains no bundled third-party recipe videos or fonts.
+
+The hosted build includes the shared Atelier navigation in `public/native-nav/`. It links directly to the other published projects and the Vitrina Local overview; the shopper interface runs in the same document.
