@@ -22,3 +22,7 @@ The shopper UI is derived from the Vitrina era-1 app in the Leo monorepo (`apps/
 The Microinvest WHP integration was a read-only PowerShell lab demo at one shop. The historical source tree contains a production-reader contract, not a production reader binary; it is not included here.
 
 Social Recipes is a separate extraction and CDN project; Vitrina Local consumed recipe results as part of its shopping flow.
+
+## License
+
+First-party source and the authored demo illustration are available under the [MIT license](LICENSE). Dependencies retain their own licenses; they are installed separately and are not distributed in this repository. The demo includes no third-party recipe videos or bundled third-party fonts.
