@@ -314,13 +314,13 @@ export function RecipeModal({
               the recipe blurb only if they're curious. (Peter, 2026-04). */}
           {match?.summary ? <p className="vitrina-recipe-summary">{match.summary}</p> : null}
 
-          <p className="vitrina-recipe-attribution">
+          {detail.source_url ? <p className="vitrina-recipe-attribution">
             Original on{' '}
             <a href={detail.source_url} target="_blank" rel="noreferrer">
               {detail.source}
             </a>{' '}
             by {detail.creator}.
-          </p>
+          </p> : null}
 
         </section>
       </div>
@@ -343,14 +343,14 @@ export function RecipeModal({
             €{liveTotal.toFixed(2)}
           </span>
         </div>
-        <button
+        {detail.source_url ? <button
           type="button"
           className="vitrina-recipe-modify"
           onClick={() => void modifyHandler()}
           disabled={adding}
         >
           Modify recipe
-        </button>
+        </button> : null}
         <button
           type="button"
           className="vitrina-recipe-cta"

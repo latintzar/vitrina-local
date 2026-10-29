@@ -109,7 +109,7 @@ export function RecipeEmbed({ source, sourceUrl, sourceId, posterUrl, video }: R
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
           allowFullScreen
         />
-      ) : (
+      ) : sourceUrl ? (
         <a
           className="vitrina-recipe-embed__link"
           href={sourceUrl}
@@ -118,7 +118,7 @@ export function RecipeEmbed({ source, sourceUrl, sourceId, posterUrl, video }: R
         >
           Open original on {source}
         </a>
-      )}
+      ) : null}
     </div>
   );
 }
