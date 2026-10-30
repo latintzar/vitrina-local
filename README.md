@@ -2,7 +2,11 @@
 
 Turn recipe Reels & TikToks into shopping baskets from local grocers
 
-![Vitrina Local](https://atelierneyra.com/assets/product-motion-v3/vitrina.jpg)
+Vitrina Local is an agentic commerce app that turns recipe Reels and TikToks into shopping baskets from local grocers. Its shopping agent matches ingredients to nearby stock and returns a basket link in Instagram chat. The original app also includes recipe discovery, saved recipes and video-guided cooking.
+
+The original Discover, recipe and basket app and the Instagram-to-cart service are preserved. The hosted app uses authored recipes and shop stock. The animated checkout study illustrates Stripe payment and delivery confirmation; a live Stripe and retailer fulfilment connection is a continuation of the project.
+
+![Vitrina Local](https://atelierneyra.com/assets/product-motion-v4/vitrina.jpg)
 
 Vitrina Local is a recipe and shopping app for independent neighbourhood shops. People discover or save recipes, follow their videos and build baskets from ingredients available nearby. Shops make their stock visible to people planning a meal.
 
