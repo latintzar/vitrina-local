@@ -27,7 +27,8 @@
  * the chat shows a sleek preview chip above the user bubble.
  */
 
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
+import { useNativeDialog } from '../components/useNativeDialog';
 import { addToCart, bumpOptimistic, endBurst, startBurst } from '../cart/useCart';
 import type { VitrinaRecipeAttachment } from '../chat/uiMessageExtras';
 import { ShopGroup } from '../components/ShopGroup';
@@ -68,6 +69,8 @@ export function RecipeModal({
   onAddedToBasket,
   onBuildBasket,
 }: RecipeModalProps) {
+  const dialogRef = useNativeDialog(true);
+  const titleId = useId();
   void onBuildBasket;
   void onOpenBasket;
   const { isLiked, toggle } = useRecipeLikes();
@@ -213,19 +216,21 @@ export function RecipeModal({
   };
 
   return (
-    <div className="vitrina-recipe-modal" role="dialog" aria-modal="true">
+    <dialog ref={dialogRef} className="vitrina-recipe-modal" aria-labelledby={titleId}
+      onCancel={(event) => { event.preventDefault(); onClose(); }}>
       <header className="vitrina-recipe-topbar">
         <button
           type="button"
           className="vitrina-recipe-back"
           aria-label="Back"
+          data-dialog-initial=""
           onClick={onClose}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <h2 title={detail.recipe_title}>{detail.recipe_title || detail.title}</h2>
+        <h2 id={titleId} title={detail.recipe_title}>{detail.recipe_title || detail.title}</h2>
         <RecipeLikeButton liked={liked} onPress={() => likeHandler()} className="vitrina-recipe-like" size={20} />
       </header>
 
@@ -365,16 +370,22 @@ export function RecipeModal({
         .vitrina-recipe-modal {
           position: fixed;
           inset: 0;
+          width: 100%; height: 100dvh;
+          max-width: none; max-height: none;
+          margin: 0; padding: 0; border: 0;
+          overscroll-behavior: contain;
           z-index: 110;
           background: var(--color-cream);
           overflow: hidden;
         }
+        .vitrina-recipe-modal::backdrop { background: transparent; }
+        .vitrina-recipe-footer .vitrina-stepper .vitrina-stepper__btn { width: 44px; height: 44px; }
         .vitrina-recipe-topbar {
           position: absolute;
           top: 0; left: 0; right: 0;
           z-index: 4;
           display: grid;
-          grid-template-columns: 36px 1fr 36px;
+          grid-template-columns: 44px minmax(0, 1fr) 44px;
           align-items: center;
           gap: 8px;
           padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px;
@@ -386,8 +397,8 @@ export function RecipeModal({
         .vitrina-recipe-back {
           display: grid;
           place-items: center;
-          width: 36px;
-          height: 36px;
+          width: 44px;
+          height: 44px;
           padding: 0;
           margin: 0;
           border: 0;
@@ -400,8 +411,8 @@ export function RecipeModal({
         .vitrina-recipe-like {
           display: grid;
           place-items: center;
-          width: 36px;
-          height: 36px;
+          width: 44px;
+          height: 44px;
           padding: 0;
           margin: 0;
           border: 0;
@@ -486,6 +497,7 @@ export function RecipeModal({
           max-width: 540px;
           margin: 0 auto;
         }
+        .vitrina-recipe-embed:has(> .vitrina-recipe-embed__poster:only-child) { height: 100%; }
         .vitrina-recipe-embed__poster {
           position: absolute;
           inset: 0;
@@ -702,6 +714,6 @@ export function RecipeModal({
           font-size: 0.92rem;
         }
       `}</style>
-    </div>
+    </dialog>
   );
 }

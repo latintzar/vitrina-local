@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import { useNativeDialog } from '../components/useNativeDialog';
 import { ChevronLeft, X } from 'lucide-react';
 import { listShops } from '../api/mcp';
 import type { Shop } from '../api/types';
@@ -40,6 +41,10 @@ export function BasketSheet({
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [clearConfirmOpen, setClearConfirmOpen] = useState(false);
   const [clearing, setClearing] = useState(false);
+  const dialogRef = useNativeDialog(open, '[data-basket-target]');
+  const clearDialogRef = useNativeDialog(open && clearConfirmOpen, '.vitrina-bsk-clear');
+  const titleId = useId();
+  const clearTitleId = useId();
   const cart = useCart();
   const pulseAt = usePulse();
   const panelRef = useRef<HTMLElement | null>(null);
@@ -96,7 +101,8 @@ export function BasketSheet({
   };
 
   return (
-    <div className="vitrina-basket-sheet" role="dialog" aria-modal="true">
+    <dialog ref={dialogRef} className="vitrina-basket-sheet" aria-labelledby={titleId}
+      onCancel={(event) => { event.preventDefault(); onClose(); }}>
       <div className="vitrina-basket-scrim" onClick={onClose} />
       <section ref={panelRef} className="vitrina-basket-panel">
         <header className="vitrina-basket-header">
@@ -113,7 +119,7 @@ export function BasketSheet({
             <span aria-hidden className="vitrina-basket-spacer" />
           )}
           <div className="vitrina-basket-title">
-            <strong>{titleText}</strong>
+            <strong id={titleId}>{titleText}</strong>
             <span>{subtitleText}</span>
           </div>
           <button
@@ -121,6 +127,7 @@ export function BasketSheet({
             className="vitrina-basket-close"
             onClick={onClose}
             aria-label="Close basket"
+            data-dialog-initial=""
           >
             <X size={20} strokeWidth={2.2} />
           </button>
@@ -150,7 +157,8 @@ export function BasketSheet({
           )}
         </div>
         {clearConfirmOpen ? (
-          <div className="vitrina-clear-confirm" role="dialog" aria-modal="true">
+          <dialog ref={clearDialogRef} className="vitrina-clear-confirm" aria-labelledby={clearTitleId}
+            onCancel={(event) => { event.preventDefault(); event.stopPropagation(); setClearConfirmOpen(false); }}>
             <button
               type="button"
               className="vitrina-clear-confirm__scrim"
@@ -159,7 +167,7 @@ export function BasketSheet({
             />
             <section className="vitrina-clear-confirm__card" aria-label="Confirm clear basket">
               <div className="vitrina-clear-confirm__copy">
-                <strong>Clear this basket?</strong>
+                <strong id={clearTitleId}>Clear this basket?</strong>
                 <span>This removes the visible basket and any old open test baskets tied to this shopper.</span>
               </div>
               <button
@@ -172,18 +180,29 @@ export function BasketSheet({
               <button
                 type="button"
                 className="vitrina-clear-confirm__back"
+                data-dialog-initial=""
                 onClick={() => setClearConfirmOpen(false)}
               >
                 Go back
               </button>
             </section>
-          </div>
+          </dialog>
         ) : null}
         {clearing ? <InComponentLoadingOverlay label="Clearing basket…" size={76} /> : null}
       </section>
 
       <style>{`
-        .vitrina-basket-sheet { position: fixed; inset: 0; z-index: 92; pointer-events: none; }
+        .vitrina-basket-sheet { position: fixed; inset: 0; z-index: 92; width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; overflow: hidden; overscroll-behavior: contain; }
+        .vitrina-basket-sheet::backdrop, .vitrina-clear-confirm::backdrop { background: transparent; }
+        .vitrina-basket-panel .vitrina-stepper .vitrina-stepper__btn { width: 44px; height: 44px; }
+        .vitrina-basket-panel .vitrina-bsk-right { flex-direction: column; align-items: flex-end; gap: 6px; }
+        .vitrina-basket-panel .vitrina-bsk-right__price { font-family: inherit; }
+        @media(max-width:420px) {
+          .vitrina-basket-panel .vitrina-irow { grid-template-columns: 44px minmax(0, 1fr); }
+          .vitrina-basket-panel .vitrina-irow__right { grid-column: 2; justify-self: stretch; }
+          .vitrina-basket-panel .vitrina-irow__right-main { display: block; }
+          .vitrina-basket-panel .vitrina-bsk-right { display: flex; width: 100%; flex-direction: row; align-items: center; justify-content: space-between; }
+        }
         .vitrina-basket-scrim {
           position: absolute; inset: 0;
           background: color-mix(in srgb, var(--color-ink) 18%, transparent);
@@ -218,8 +237,8 @@ export function BasketSheet({
         .vitrina-basket-close {
           display: grid;
           place-items: center;
-          width: 40px;
-          height: 40px;
+          width: 44px;
+          height: 44px;
           padding: 0;
           margin: 0;
           border: 0;
@@ -266,8 +285,13 @@ export function BasketSheet({
           min-height: 0;
         }
         .vitrina-clear-confirm {
-          position: absolute;
+          position: fixed;
           inset: 0;
+          width: 100%; height: 100dvh;
+          max-width: none; max-height: none;
+          margin: 0; padding: 0; border: 0;
+          background: transparent;
+          overscroll-behavior: contain;
           z-index: 10;
           display: flex;
           align-items: flex-end;
@@ -336,6 +360,6 @@ export function BasketSheet({
           color: var(--color-ink);
         }
       `}</style>
-    </div>
+    </dialog>
   );
 }

@@ -437,7 +437,17 @@ export default function App() {
           .vitrina-app-chrome {
             grid-column: 1 / -1;
           }
+          /* Main precedes navigation in the DOM for reading order. Place both
+             explicitly so the recipe feed receives the flexible column. */
+          .vitrina-app-main {
+            grid-column: 2;
+            grid-row: 1;
+            min-width: 0;
+          }
           .vitrina-side-nav {
+            grid-column: 1;
+            grid-row: 1;
+            min-width: 0;
             display: flex;
             flex-direction: column;
             gap: 4px;

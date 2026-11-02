@@ -6,8 +6,8 @@ const products = [
   {id:'herbs',shop_id:'Garden Market',name:'Fresh herbs',price_eur:1.5,unit:'bunch'},
 ];
 const groups = [
-  {shop:{id:'Garden Market',name:'Garden Market',address:'Neighbourhood shop',walking_minutes:6},items:[{ingredient:'Tomatoes',quantity:'1 pack',product:products[0]},{ingredient:'Herbs',quantity:'1 bunch',product:products[2]}],subtotal_eur:3.9},
-  {shop:{id:'Corner Pantry',name:'Corner Pantry',address:'Neighbourhood shop',walking_minutes:9},items:[{ingredient:'Pasta',quantity:'1 pack',product:products[1]}],subtotal_eur:2.2},
+  {shop:{id:'Garden Market',name:'Garden Market',address:'Neighbourhood shop',walking_minutes:6},items:[{ingredient:'Tomatoes',quantity:'1 pack',quantity_purchase:'1 pack',product:products[0]},{ingredient:'Herbs',quantity:'1 bunch',quantity_purchase:'1 bunch',product:products[2]}],subtotal_eur:3.9},
+  {shop:{id:'Corner Pantry',name:'Corner Pantry',address:'Neighbourhood shop',walking_minutes:9},items:[{ingredient:'Pasta',quantity:'1 pack',quantity_purchase:'1 pack',product:products[1]}],subtotal_eur:2.2},
 ];
 const videos = names.map((name,i)=>({id:`demo-${i}`,sort:i,source:'Web',source_id:`demo-${i}`,source_url:'',creator:'Vitrina demo',title:name,status:'processed',summary:'A simple meal with ingredients from nearby shops.',recipe_title:name,ingredient_preview:['Tomatoes','Pasta','Herbs'],media:{}}));
 const key='vitrina-cook:demo-carts';
@@ -29,7 +29,7 @@ export function installDemo() {
     if(recipe){const v=videos.find(x=>x.id===recipe[1])||videos[0];return json({...v,recipe:{title:v.title,description:v.summary,ingredients:products.map(p=>({description:p.name})),directions:[],servings:{quantity:2}},stock_groups:groups,match:{feasibility:'full',shop_groups:groups,missing:[],blockers:[],total_eur:6.1,currency:'EUR'}});}
     if(path==='/carts'&&method==='POST'){const body=JSON.parse(String(init?.body||'{}'));const carts=read();const id=`demo-cart-${body.shop_id}`;carts[id]??={id,shop_id:body.shop_id,currency:'EUR',line_items:[]};save(carts);return json(carts[id]);}
     const match=path.match(/^\/carts\/([^/]+)(?:\/items(?:\/([^/]+))?)?$/);
-    if(match){const carts=read(), cart=carts[match[1]];if(!cart)return json({},404);if(method==='POST'){const b=JSON.parse(String(init?.body||'{}'));const p=products.find(x=>x.id===b.product_id);if(p){const line=cart.line_items.find((x:any)=>x.product_id===p.id);if(line)line.quantity+=b.quantity;else cart.line_items.push({id:`line-${p.id}`,cart_id:cart.id,product_id:p.id,quantity:b.quantity,product_snapshot:p,group_id:b.group_id,group_metadata:b.group_metadata});}save(carts);}else if(method==='DELETE'&&match[2]){cart.line_items=cart.line_items.filter((x:any)=>x.id!==match[2]);save(carts);}else if(method==='PATCH'&&match[2]){const b=JSON.parse(String(init?.body||'{}'));const line=cart.line_items.find((x:any)=>x.id===match[2]);if(line)line.quantity=b.quantity;save(carts);}return json(cart);}
+    if(match){const carts=read(), cart=carts[decodeURIComponent(match[1])];if(!cart)return json({},404);if(method==='POST'){const b=JSON.parse(String(init?.body||'{}'));const p=products.find(x=>x.id===b.product_id);if(p){const line=cart.line_items.find((x:any)=>x.product_id===p.id);if(line)line.quantity+=b.quantity;else cart.line_items.push({id:`line-${p.id}`,cart_id:cart.id,product_id:p.id,quantity:b.quantity,product_snapshot:p,group_id:b.group_id,group_metadata:b.group_metadata});}save(carts);}else if(method==='DELETE'&&match[2]){cart.line_items=cart.line_items.filter((x:any)=>x.id!==decodeURIComponent(match[2]));save(carts);}else if(method==='PATCH'&&match[2]){const b=JSON.parse(String(init?.body||'{}'));const line=cart.line_items.find((x:any)=>x.id===decodeURIComponent(match[2]));if(line)line.quantity=b.quantity;save(carts);}return json(cart);}
     return json({},404);
   };
 }
