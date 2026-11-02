@@ -2,42 +2,45 @@
 
 Turn recipe Reels & TikToks into shopping baskets from local grocers
 
-Vitrina Local is an agentic commerce app that turns recipe Reels and TikToks into shopping baskets from local grocers. Its shopping agent matches ingredients to nearby stock and returns a basket link in Instagram chat. The original app also includes recipe discovery, saved recipes and video-guided cooking.
+Vitrina Local is an agentic commerce app that connects a recipe someone wants to cook with stock at nearby independent shops. The original app combines recipe discovery, saved recipes, video-guided cooking and shop-grouped baskets. Its companion Instagram integration turns a shared Reel into a basket-review link in chat.
 
-The original Discover, recipe and basket app and the Instagram-to-cart service are preserved. The hosted app uses authored recipes and shop stock. The animated checkout study illustrates Stripe payment and delivery confirmation; a live Stripe and retailer fulfilment connection is a continuation of the project.
+[Open demo](https://preview.atelierneyra.com/apps/vitrina-local/) · [Website](https://atelierneyra.com/vitrina) · [Product tour](docs/product-tour.md) · [Documentation](https://docs.atelierneyra.com/vitrina/overview/)
 
 ![Vitrina Local](https://atelierneyra.com/assets/product-motion-v4/vitrina.jpg)
 
-Vitrina Local is a recipe and shopping app for independent neighbourhood shops. People discover or save recipes, follow their videos and build baskets from ingredients available nearby. Shops make their stock visible to people planning a meal.
+## Try a recipe basket
 
-The recovered shopper interface brings together recipe discovery, saved recipes, video and ingredients, local stock grouped by shop, and a multi-shop basket. The companion Instagram integration turns shared Reels into recipes and basket-review links. Social Recipes is the separate extraction and video work that Vitrina Local builds on.
+Open **Discover**, choose **Tomato pasta**, and review its matched ingredients. **Add to Basket** groups the products into Garden Market and Corner Pantry. Open the basket to change quantities or remove an item; it stays on your device when you return.
 
-The standalone preview runs the original Discover, recipe and basket interface using authored recipes, fictional shops and browser-local stock. Checkout is a provider integration for a connected deployment. The [architecture](docs/architecture.md) and [status](docs/status.md) describe the recovered scope.
+That complete demonstration uses authored recipes, fictional shops and browser-local stock. It lets you explore the original shopper interface immediately. The [product tour](docs/product-tour.md) separates that working path from the connected Instagram, inventory and payment services.
 
-## Run
+## Product areas
 
-Requires Node.js and pnpm 9.
+| Area | What it does |
+| --- | --- |
+| Discover and saved recipes | Find a meal and keep recipes together |
+| Recipe viewer | Keep the source video, ingredients and matched shop products in one place |
+| Local stock | Show the shops supplying each ingredient, pack quantities and walking information |
+| Multi-shop basket | Review products by shop and update quantities |
+| Instagram intake | Resolve a shared Reel and return a basket-review link through the companion integration |
+| Inventory and checkout | Connect retailer stock, basket review and the payment/collection workflow |
 
-```sh
-pnpm install
-pnpm --filter @scope/vitrina-web dev
-```
+The source preserves the original consumer UI and commerce clients. The hosted release exercises Discover, recipe details and baskets with demo data. The checkout study on the project website illustrates Stripe payment and confirmation; connected retailer inventory, payment and fulfilment remain continuation work. [Reached stage](docs/status.md).
 
-Open the displayed local URL. Build for a public path with:
+## Build on it
 
-```sh
-pnpm --filter @scope/vitrina-web build --base /apps/vitrina-local/
-```
+[Run locally](docs/getting-started.md) with Node.js 22 and the repository’s pinned pnpm 10.32.1. The [architecture guide](docs/architecture.md) maps the original app and its standalone adapter.
 
-The build writes to `apps/vitrina/product/public/app`. Set the base to `/` for a root-hosted deployment. The demo stores the basket and saved recipes in the visitor's browser.
+| Module | Source |
+| --- | --- |
+| Discovery and recipe viewer | [discover](apps/vitrina/product/web/src/discover) |
+| Cart, quantities and basket sheet | [cart](apps/vitrina/product/web/src/cart), [shops](apps/vitrina/product/web/src/shops) |
+| Browser-local demo contracts | [demo.ts](apps/vitrina/product/web/src/demo.ts) |
+| Original agent and commerce clients | [chat](apps/vitrina/product/web/src/chat), [api](apps/vitrina/product/web/src/api), [orders](apps/vitrina/product/web/src/orders) |
+| Historical shop connector | [Microinvest evidence](docs/architecture.md#inventory-connector-evidence) |
 
-## Companion projects
+[Social Recipes](https://github.com/latintzar/social-recipes-kit) supplies the separate video-to-recipe layer. [Instagram Recipe Cart](https://github.com/latintzar/instagram-recipe-cart) supplies shared-Reel intake and basket-review integration.
 
-- [Social Recipes Kit](https://github.com/latintzar/social-recipes-kit) — reusable extraction and video modules.
-- [Instagram Recipe Cart](https://github.com/latintzar/instagram-recipe-cart) — shared-Reel intake and basket review integration.
+First-party source, original Vitrina doodles and the authored demo illustration use the [MIT licence](LICENSE). Dependencies and source media retain their own terms.
 
-## License
-
-First-party source, original Vitrina doodles and the authored demo illustration are available under the [MIT license](LICENSE). Dependencies retain their own licenses and are installed separately. The preview contains no bundled third-party recipe videos or fonts.
-
-The hosted build includes the shared Atelier navigation in `public/native-nav/`. It links directly to the other published projects and the Vitrina Local overview; the shopper interface runs in the same document.
+[made by atelier neyra](https://atelierneyra.com)
